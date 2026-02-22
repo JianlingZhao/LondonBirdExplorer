@@ -86,7 +86,7 @@ https://carto.com/
 
 ## Note
 
-Observing data from e-Bird were uploaded by birdwatchers, so this website is not a tool for exploring species pattern, but for users to find out places that are best for birdwatching, and get to know more about bird species that can be fount in London. 
+Observing data from e-Bird were uploaded by birdwatchers, so this website is not a tool for exploring species pattern, but for users to find out places that are best for birdwatching, and to get to know more about bird species that can be found in London. 
 
 
 ## AI Acknowledgement
