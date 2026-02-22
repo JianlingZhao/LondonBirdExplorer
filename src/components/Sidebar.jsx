@@ -377,7 +377,7 @@ function Sidebar({
                     fontWeight: "500"
                   }}
                 >
-                  View species details
+                  View Species Info
                 </div>
 
               )}
