@@ -7,15 +7,14 @@ function DataAttribution() {
   return (
 
     <>
-      {/* ===================== */}
-      {/* LEFT — eBird DATA */}
-      {/* ===================== */}
+
+      {/* add data source */}
 
       <div
         style={{
           position: "absolute",
           bottom: 12,
-          left: 12,          // ⭐ 改为 left
+          left: 12,        
           zIndex: 1000,
           fontSize: 11,
           fontFamily: "system-ui",

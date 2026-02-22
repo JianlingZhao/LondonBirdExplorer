@@ -3,6 +3,9 @@ import { speciesList } from "../data/speciesIndex";
 import { speciesAlias } from "../data/speciesAlias";
 import { speciesMeta } from "../data/species_wiki_link";
 
+
+// projecting species id / common name / scientific name
+
 const idToSciName = new Map(
 
   speciesList.map((s) => [Number(s.id),s.name])
@@ -24,7 +27,9 @@ function GridPopup({
     speciesCount = 0,
     speciesTop = []
   } = feature.properties ?? {};
-  
+
+
+  // get top species
   let safeSpeciesTop = [];
 
   if (typeof speciesTop === "string") {
@@ -44,6 +49,9 @@ function GridPopup({
     safeSpeciesTop = speciesTop;
 
   }
+
+
+  // prepare for the popup location: center of the chosen grid
 
   function getPolygonCenter(ft) {
 
@@ -75,6 +83,7 @@ function GridPopup({
   const [centerLon, centerLat] = getPolygonCenter(feature);
 
 
+  // if clicking species button: track specific species > changing mode to track mode
 
   function handleOpenModal(name) {
 
@@ -93,8 +102,6 @@ function GridPopup({
     onClose();
 
   }
-
-
 
   return (
 
@@ -124,7 +131,7 @@ function GridPopup({
       >
 
 
-        {/* HEADER */}
+        {/* header */}
 
         <div style={{
 
@@ -139,7 +146,7 @@ function GridPopup({
         </div>
 
 
-        {/* STATS */}
+        {/* stats */}
 
         <div style={{
 
@@ -188,7 +195,7 @@ function GridPopup({
         }}/>
 
 
-        {/* SUBTITLE */}
+        {/* subtitle */}
 
         <div style={{
 
@@ -205,7 +212,7 @@ function GridPopup({
         </div>
 
 
-        {/* LIST */}
+        {/* species list */}
 
         <div style={{
 
@@ -232,7 +239,7 @@ function GridPopup({
 
           )}
 
-
+          {/* get projecting: from id to common name */}
           {safeSpeciesTop.slice(0, 10).map(([id, count]) => {
 
             const sciName = idToSciName.get(Number(id)) || `Unknown (${id})`;
@@ -293,6 +300,9 @@ function GridPopup({
                     gap: "6px"
                   }}>
 
+
+                  {/* button to open species modal */}
+
                   <button
                   onClick={() => handleOpenModal(sciName)}
                   style={{
@@ -328,23 +338,13 @@ function GridPopup({
 
                   </div>
 
-
-
               </div>
-
             );
-
           })}
 
-
         </div>
-
-
       </div>
-
-
     </Popup>
-
   );
 
 }

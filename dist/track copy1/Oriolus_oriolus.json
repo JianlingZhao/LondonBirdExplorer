@@ -1,1 +1,0 @@
-{"type": "FeatureCollection", "features": [{"type": "Feature", "properties": {"species": "Oriolus oriolus", "year": 2023, "month": 5, "date": "2023-05-24", "location": "Wimbledon Common", "count": 1.0}, "geometry": {"type": "Point", "coordinates": [-0.2335668, 51.4358773]}, "id": 0}]}

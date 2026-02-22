@@ -16,9 +16,8 @@ function GridLayer({
   const [loading, setLoading] = useState(true);
   const [hotspotData, setHotspotData] = useState(null);
 
-  // -------------------------
-  // Zoom folder mapping
-  // -------------------------
+
+  // zoom folder mapping
 
   function getZoomFolder(z) {
     if (z < 8) return 8;
@@ -29,91 +28,99 @@ function GridLayer({
 
   const zoomLevel = getZoomFolder(zoom);
 
-  // -------------------------
-  // Reset selection
-  // -------------------------
+
+  // reset selection
 
   useEffect(() => {
     setSelectedGridFeature(null);
   }, [zoomLevel, selectedMonth]);
 
-useEffect(() => {
 
-  const filePath = selectedMonth
-    ? `/grid/zoom14/${selectedMonth}.json`
-    : `/grid/zoom14/all.json`;
+  // density mapping
+  // hotspot filter logic: has a high data density + (neighbors) decreasing data density around the grid*
+  useEffect(() => {
 
-  fetch(filePath)
-    .then(res => res.json())
-    .then(data => {
+    const filePath = selectedMonth
+      ? `/grid/zoom14/${selectedMonth}.json`
+      : `/grid/zoom14/all.json`;
 
-      const valid = data.features.filter(
-        f =>
-          typeof f.properties?.density === "number" &&
-          Array.isArray(f.properties?.centroid)
-      );
+    fetch(filePath)
+      .then(res => res.json())
+      .then(data => {
 
-      // 🔥 1️⃣ 计算绝对高值阈值（用 P90）
-      const densities = valid.map(f => f.properties.density);
-      const sorted = [...densities].sort((a, b) => a - b);
-      const threshold = sorted[Math.floor(sorted.length * 0.9)];
-      // 你可以改成 0.95 更严格
+        const valid = data.features.filter(
+          f =>
+            typeof f.properties?.density === "number" &&
+            Array.isArray(f.properties?.centroid)
+        );
 
-      const PEAK_RADIUS = 0.02;
+        // p90: threshold, select grids with high data density
 
-      const peaks = valid.filter(f => {
-        const [lon1, lat1] = f.properties.centroid;
-        const d1 = f.properties.density;
+        const densities = valid.map(f => f.properties.density);
+        const sorted = [...densities].sort((a, b) => a - b);
+        const threshold = sorted[Math.floor(sorted.length * 0.9)];
 
-        // ❗ 2️⃣ 绝对值筛选
-        if (d1 < threshold) return false;
+        const PEAK_RADIUS = 0.02;
 
-        // 找邻居
-        const neighbors = valid.filter(g => {
-          if (g === f) return false;
+        const peaks = valid.filter(f => {
+          const [lon1, lat1] = f.properties.centroid;
+          const d1 = f.properties.density;
 
-          const [lon2, lat2] = g.properties.centroid;
 
-          const dist =
-            Math.sqrt(
-              (lon1 - lon2) ** 2 +
-              (lat1 - lat2) ** 2
-            );
+          // filter by density threshold
 
-          return dist < PEAK_RADIUS;
+          if (d1 < threshold) return false;
+
+
+          // find neighbors
+
+          const neighbors = valid.filter(g => {
+            if (g === f) return false;
+
+            const [lon2, lat2] = g.properties.centroid;
+
+            const dist =
+              Math.sqrt(
+                (lon1 - lon2) ** 2 +
+                (lat1 - lat2) ** 2
+              );
+
+            return dist < PEAK_RADIUS;
+          });
+
+          // Confirm the local maximum
+          return neighbors.every(
+            n => n.properties.density <= d1
+          );
         });
 
-        // ❗ 3️⃣ 局部最大
-        return neighbors.every(
-          n => n.properties.density <= d1
-        );
+
+        // defining hotspot
+        const fc = {
+          type: "FeatureCollection",
+          features: peaks.map(f => ({
+            type: "Feature",
+            geometry: {
+              type: "Point",
+              coordinates: f.properties.centroid
+            },
+            properties: {
+              density: f.properties.density
+            }
+          }))
+        };
+
+        setHotspotData(fc);
       });
+  }, [selectedMonth]);
 
-      const fc = {
-        type: "FeatureCollection",
-        features: peaks.map(f => ({
-          type: "Feature",
-          geometry: {
-            type: "Point",
-            coordinates: f.properties.centroid
-          },
-          properties: {
-            density: f.properties.density
-          }
-        }))
-      };
 
-      setHotspotData(fc);
-    });
-}, [selectedMonth]);
-  // -------------------------
   // Fetch grid data
-  // -------------------------
 
   useEffect(() => {
 
     setLoading(true);
-
+    // load data
     const filePath = selectedMonth
       ? `/grid/zoom${zoomLevel}/${selectedMonth}.json`
       : `/grid/zoom${zoomLevel}/all.json`;
@@ -138,40 +145,41 @@ useEffect(() => {
   }, [zoomLevel, selectedMonth]);
 
 
-  // ==========================
-  // 🎨 用 density 上色
-  // ==========================
+  // color map > density map
 
-const gridStyle = {
-  id: "grid-fill",
-  type: "fill",
-  paint: {
-    "fill-color": [
-      "interpolate",
-      ["linear"],
+  const gridStyle = {
+    id: "grid-fill",
+    type: "fill",
+    paint: {
+      "fill-color": [
+        "interpolate",
+        ["linear"],
 
-      // ⭐ 非线性视觉压缩（只作用于高值）
-      ["sqrt", ["get", "density"]],
+        // nonlinear compression
+        
+        ["sqrt", ["get", "density"]],
 
-      0.0, "rgba(255,255,255,0)",
-      0.2, "#EDF3EE",
-      0.4, "#C7DCCB",
-      0.6, "#7faf8b",
-      0.8, "#3E7C59",
-      1.0, "#1F4D36"
-    ],
+        0.0, "rgba(255,255,255,0)",
+        0.2, "#EDF3EE",
+        0.4, "#C7DCCB",
+        0.6, "#7faf8b",
+        0.8, "#3E7C59",
+        1.0, "#1F4D36"
+      ],
 
-    "fill-opacity": [
-      "interpolate",
-      ["linear"],
-      ["zoom"],
-      8, 0.4,
-      12, 0.75,
-      14, 0.9
-    ]
-  }
-};
-    
+      "fill-opacity": [
+        "interpolate",
+        ["linear"],
+        ["zoom"],
+        8, 0.4,
+        12, 0.75,
+        14, 0.9
+      ]
+    }
+  };
+  
+  // visual optimizing:
+  // setting grid glow
   const gridGlowStyle = {
     id: "grid-outline-glow",
     type: "line",
@@ -180,12 +188,15 @@ const gridStyle = {
         "line-width": [
         "case",
         ["boolean", ["feature-state", "hover"], false],
-        8,   // 外层大一点
+        8,  
         0
         ],
         "line-blur": 2
     }
     };
+
+  
+  // setting grid outline
 
   const gridOutlineStyle = {
     id: "grid-outline",
@@ -201,134 +212,137 @@ const gridStyle = {
     }
   };
 
-const hotspotGlow = {
-  id: "hotspot-glow",
-  type: "circle",
-  paint: {
-    "circle-radius": [
-      "interpolate",
-      ["linear"],
-      ["zoom"],
 
-      8,
-      [
+  // setting style for hotspot
+
+  const hotspotGlow = {
+    id: "hotspot-glow",
+    type: "circle",
+    paint: {
+      "circle-radius": [
         "interpolate",
         ["linear"],
-        ["get", "density"],
-        0.3, 50,
-        1, 100
+        ["zoom"],
+
+        8,
+        [
+          "interpolate",
+          ["linear"],
+          ["get", "density"],
+          0.3, 50,
+          1, 100
+        ],
+
+        10,
+        [
+          "interpolate",
+          ["linear"],
+          ["get", "density"],
+          0.3, 60,
+          1, 200
+        ],
+
+        12,
+        [
+          "interpolate",
+          ["linear"],
+          ["get", "density"],
+          0.3, 70,
+          1, 280
+        ],
+
+        14,
+        [
+          "interpolate",
+          ["linear"],
+          ["get", "density"],
+          0.3, 80,
+          1, 400
+        ],
+
+        18,
+        [
+          "interpolate",
+          ["linear"],
+          ["get", "density"],
+          0.3, 90,
+          1, 560
+        ]
       ],
 
-      10,
-      [
+      "circle-color": "#E07A2F",
+      "circle-opacity": 0.12,
+      "circle-blur": 0.7
+    }
+  };
+
+  const hotspotRing = {
+    id: "hotspot-ring",
+    type: "circle",
+    paint: {
+      "circle-radius": [
         "interpolate",
         ["linear"],
-        ["get", "density"],
-        0.3, 60,
-        1, 200
+        ["zoom"],
+
+        8,
+        [
+          "interpolate",
+          ["linear"],
+          ["get", "density"],
+          0.3, 25,
+          1, 40
+        ],
+
+        10,
+        [
+          "interpolate",
+          ["linear"],
+          ["get", "density"],
+          0.3, 30,
+          1, 105
+        ],
+
+        12,
+        [
+          "interpolate",
+          ["linear"],
+          ["get", "density"],
+          0.3, 35,
+          1, 195
+        ],
+
+        14,
+        [
+          "interpolate",
+          ["linear"],
+          ["get", "density"],
+          0.3, 40,
+          1, 330
+        ],
+
+        18,
+        [
+          "interpolate",
+          ["linear"],
+          ["get", "density"],
+          0.3, 45,
+          1, 510
+        ]
       ],
 
-      12,
-      [
-        "interpolate",
-        ["linear"],
-        ["get", "density"],
-        0.3, 70,
-        1, 280
-      ],
-
-      14,
-      [
-        "interpolate",
-        ["linear"],
-        ["get", "density"],
-        0.3, 80,
-        1, 400
-      ],
-
-      18,
-      [
-        "interpolate",
-        ["linear"],
-        ["get", "density"],
-        0.3, 90,
-        1, 560
-      ]
-    ],
-
-    "circle-color": "#E07A2F",
-    "circle-opacity": 0.12,
-    "circle-blur": 0.7
-  }
-};
-
-const hotspotRing = {
-  id: "hotspot-ring",
-  type: "circle",
-  paint: {
-    "circle-radius": [
-      "interpolate",
-      ["linear"],
-      ["zoom"],
-
-      8,
-      [
-        "interpolate",
-        ["linear"],
-        ["get", "density"],
-        0.3, 25,
-        1, 40
-      ],
-
-      10,
-      [
-        "interpolate",
-        ["linear"],
-        ["get", "density"],
-        0.3, 30,
-        1, 105
-      ],
-
-      12,
-      [
-        "interpolate",
-        ["linear"],
-        ["get", "density"],
-        0.3, 35,
-        1, 195
-      ],
-
-      14,
-      [
-        "interpolate",
-        ["linear"],
-        ["get", "density"],
-        0.3, 40,
-        1, 330
-      ],
-
-      18,
-      [
-        "interpolate",
-        ["linear"],
-        ["get", "density"],
-        0.3, 45,
-        1, 510
-      ]
-    ],
-
-    "circle-color": "rgba(0,0,0,0)",
-    "circle-stroke-width": 1,
-    "circle-stroke-color": "#E07A2F",
-    "circle-opacity": 1
-  }
-};
+      "circle-color": "rgba(0,0,0,0)",
+      "circle-stroke-width": 1,
+      "circle-stroke-color": "#E07A2F",
+      "circle-opacity": 1
+    }
+  };
   
 
   return (
     <>
 
-      {/* loading 提示 */}
+      {/* when loading */}
       {loading && (
         <div
           className="grid-loading"
@@ -362,7 +376,7 @@ const hotspotRing = {
 
 
 
-      {/* ⭐ Source 永远存在 */}
+      {/* make sure to have source */}
       <Source
         id="grid-source"
         type="geojson"
@@ -375,7 +389,7 @@ const hotspotRing = {
         promoteId="id"
       >
 
-        {/* ⭐ Layer 永远存在 */}
+        {/* make sure to have layer */}
         <Layer {...gridStyle} />
         <Layer {...gridGlowStyle} />
         <Layer {...gridOutlineStyle} />
@@ -384,7 +398,7 @@ const hotspotRing = {
 
 
 
-      {/* hotspot 同理 */}
+      {/* same for hotspot */}
       <Source
         id="hotspot-source"
         type="geojson"
@@ -400,8 +414,6 @@ const hotspotRing = {
         <Layer {...hotspotRing} />
 
       </Source>
-
-
 
       {selectedGridFeature && (
         <GridPopup
