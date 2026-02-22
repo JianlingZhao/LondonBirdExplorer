@@ -1,0 +1,1 @@
+{"type": "FeatureCollection", "features": [{"type": "Feature", "properties": {"species": "Calcarius lapponicus", "year": 2023, "month": 12, "date": "2023-12-02", "location": "Beddington Farmlands", "count": 1.0}, "geometry": {"type": "Point", "coordinates": [-0.1479596, 51.3805849]}, "id": 0}]}

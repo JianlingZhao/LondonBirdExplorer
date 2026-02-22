@@ -1,0 +1,611 @@
+@import "tailwindcss";
+
+
+/* PAGE LAYOUT */
+.user-marker {
+
+ width: 18px;
+ height: 18px;
+
+ background: #4C7F6F;
+
+ border-radius: 50%;
+
+ border: 3px solid white;
+
+ box-shadow: 0 0 0 6px rgba(30,144,255,0.3);
+
+ animation: pulse 2s infinite;
+
+}
+
+
+@keyframes pulse {
+
+ 0% {
+
+  box-shadow: 0 0 0 0 rgba(30,144,255,0.6);
+
+ }
+
+ 70% {
+
+  box-shadow: 0 0 0 12px rgba(30,144,255,0);
+
+ }
+
+ 100% {
+
+  box-shadow: 0 0 0 0 rgba(30,144,255,0);
+
+ }
+
+}
+
+
+.locating-overlay {
+
+ position: absolute;
+
+ top: 20px;
+
+ left: 50%;
+
+ transform: translateX(-50%);
+
+ background: white;
+
+ padding: 8px 16px;
+
+ border-radius: 6px;
+
+ box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+
+ font-size: 14px;
+
+}
+
+.app-container {
+
+ display: flex;
+
+ flex-direction: column;
+
+ height: 100vh;
+
+}
+
+
+.main-layout {
+
+ display: flex;
+
+ flex: 1;
+
+ overflow: visible;
+
+}
+
+
+/* SIDE BAR */
+
+.sidebar {
+
+ width: 280px;
+
+ background: #f9fafb;
+
+ border-right: 1px solid #e5e7eb;
+
+ padding: 16px;
+
+ display: flex;
+
+ flex-direction: column;
+
+ gap: 18px;
+
+ font-family: system-ui;
+
+}
+
+
+/* CARD FORM SECTION */
+
+.sidebar-section {
+
+ background: white;
+
+ padding: 14px;
+
+ border-radius: 10px;
+
+ border: 1px solid #e5e7eb;
+
+ box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+
+}
+
+
+/* SECTION TITLE */
+
+.sidebar-title {
+
+ font-size: 11px;
+
+ font-weight: 700;
+
+ color: #6b7280;
+
+ margin-bottom: 10px;
+
+ text-transform: uppercase;
+
+ letter-spacing: 0.06em;
+
+}
+
+
+
+
+
+/* CHOOSING MODE */
+.toggle-row {
+
+ display: flex;
+
+ gap: 10px;
+
+ width: 100%;
+
+}
+
+
+.toggle-row .toggle-btn {
+
+ flex: 1 1 0;
+
+ text-align: center;
+
+}
+
+
+.toggle-btn {
+
+ flex: 1;
+
+ padding: 10px;
+
+ border-radius: 8px;
+
+ border: 1px solid #d1d5db;
+
+ background: white;
+
+ cursor: pointer;
+
+ font-size: 14px;
+
+ font-weight: 600;
+
+ color: #344E41;
+
+ transition: all 0.15s ease;
+
+}
+
+
+.toggle-btn:hover {
+
+ background: #f3f4f6;
+
+}
+
+
+/* active mode */
+
+.toggle-btn.active {
+
+ background: #2F6B3E;
+
+ color: white;
+
+ border: 1px solid #2F6B3E;
+
+ box-shadow: 0 4px 10px rgba(47,107,62,0.25);
+
+ transform: translateY(-1px);
+
+}
+
+
+
+
+
+/* CHOOSING LOCATION */
+
+
+
+.primary-btn {
+
+ width: 100%;
+
+ padding: 9px;
+
+ border-radius: 8px;
+
+ border: 1px solid rgba(47,107,62,0.35);
+
+ background: rgba(47,107,62,0.12);
+
+ color: #2F6B3E;
+
+ cursor: pointer;
+
+ font-weight: 600;
+
+ transition: all 0.15s ease;
+
+}
+
+
+.primary-btn:hover {
+
+ background: rgba(47,107,62,0.18);
+
+}
+
+
+.primary-btn:active {
+
+ transform: translateY(1px);
+
+}
+
+
+.sidebar-mode {
+
+ padding-bottom: 6px;
+
+ border-bottom: 1px solid #e5e7eb;
+
+ margin-bottom: 6px;
+
+}
+
+
+/* INSTRUCTIONS OF DIF MODE (TOP SIDEBAR) */
+
+.sidebar-hint {
+
+  font-size: 12px;
+
+  color: rgba(147, 147, 147, 0.7);
+
+  font-weight: 400;
+
+  margin-top: 2px;
+
+  letter-spacing: 0.2px;
+
+  margin-bottom: 10px;
+
+}
+
+
+
+/* INPUT*/
+
+.sidebar input {
+
+ width: 100%;
+
+ padding: 9px;
+
+ border-radius: 8px;
+
+ border: 1px solid #d1d5db;
+
+ margin-bottom: 6px;
+
+ font-size: 14px;
+
+}
+
+
+.sidebar input:focus {
+
+ outline: none;
+
+ border-color: #2F6B3E;
+
+ box-shadow: 0 0 0 2px rgba(47,107,62,0.15);
+
+}
+
+
+/* SELECT BUTTON */
+
+.sidebar select {
+
+ width: 100%;
+
+ padding: 9px;
+
+ border-radius: 8px;
+
+ border: 1px solid #d1d5db;
+
+ font-size: 14px;
+
+}
+
+
+.sidebar select:focus {
+
+ outline: none;
+
+ border-color: #2F6B3E;
+
+ box-shadow: 0 0 0 2px rgba(47,107,62,0.15);
+
+}
+
+
+.search-row {
+
+ display: flex;
+
+ gap: 6px;
+
+}
+
+
+.search-row input {
+
+ flex: 1;
+
+ margin-bottom: 0;
+
+}
+
+
+.search-row button {
+
+ width: auto;
+
+ padding: 9px 14px;
+
+ border-radius: 8px;
+
+ border: none;
+
+ background: #9FB7A6;
+
+ color: white;
+
+ cursor: pointer;
+
+ font-weight: 600;
+
+}
+
+.search-btn {
+
+ padding: 9px 14px;
+
+ border-radius: 8px;
+
+ border: 1px solid #d1d5db;
+
+ background: white;
+
+ color: #eaeaea;
+
+ cursor: pointer;
+
+ font-weight: 600;
+
+ transition: all 0.15s ease;
+
+}
+
+.search-btn:hover {
+
+ background: #f3f4f6;
+
+}
+
+
+.map-container {
+
+ flex: 1;
+
+ position: relative;
+
+ overflow: hidden;
+
+ min-height: 0;
+
+}
+
+
+
+
+/* POP UP & CLOSE BUTTON*/
+
+.maplibregl-popup-content {
+
+  width: 300px;
+
+  padding: 16px;
+
+  border-radius: 12px;
+
+}
+
+
+
+.maplibregl-popup-close-button {
+
+  position: absolute;
+
+  top: 8px;
+
+  right: 10px;
+
+  width: 24px;
+
+  height: 24px;
+
+  font-size: 18px;
+
+  line-height: 24px;
+
+  text-align: center;
+
+  border-radius: 6px;
+
+  cursor: pointer;
+
+}
+
+
+.maplibregl-popup-close-button:hover {
+
+  background: rgba(0,0,0,0.08);
+
+}
+
+.or-divider {
+
+ display: flex;
+
+ align-items: center;
+
+ text-align: center;
+
+ margin: 10px 0;
+
+ color: #9ca3af;
+
+ font-size: 11px;
+
+ font-weight: 600;
+
+}
+
+
+.or-divider::before,
+.or-divider::after {
+
+ content: "";
+
+ flex: 1;
+
+ border-bottom: 1px solid #e5e7eb;
+
+}
+
+
+.or-divider span {
+
+ padding: 0 8px;
+
+}
+
+
+/* TRACK MODE: HINT (SELECTED SPECIES = NULL)*/
+
+.track-hint {
+
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+
+  background: rgba(255,255,255,0.95);
+
+  padding: 18px 24px;
+
+  border-radius: 12px;
+
+  border: 1px solid #e5e7eb;
+
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+
+  font-family: system-ui;
+
+  font-size: 14px;
+
+  color: #374151;
+
+  text-align: center;
+
+  z-index: 1000;
+
+}
+
+.species-dropdown-wrapper {
+
+  position: relative;
+
+}
+
+
+/* SPECIES SELECTION DROPDOWN */
+
+.species-dropdown {
+
+  position: absolute;
+
+  top: 100%;
+
+  left: 0;
+  right: 0;
+
+  background: white;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 8px;
+
+  max-height: 280px;
+
+  overflow-y: auto;
+
+  z-index: 1000;
+
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+
+}
+
+
+
+/* DROPDOWN ITEM */
+
+.species-item {
+
+  padding: 8px 12px;
+
+  cursor: pointer;
+
+  font-size: 14px;
+
+}
+
+
+
+.species-item:hover {
+
+  background: #f3f4f6;
+
+}
+
+
+* {
+  box-sizing: border-box;
+}
+

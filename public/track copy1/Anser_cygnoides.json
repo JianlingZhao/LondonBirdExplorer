@@ -1,0 +1,1 @@
+{"type": "FeatureCollection", "features": [{"type": "Feature", "properties": {"species": "Anser cygnoides", "year": 2024, "month": 2, "date": "2024-02-18", "location": "Boxer's Lake", "count": 1.0}, "geometry": {"type": "Point", "coordinates": [-0.1144496, 51.6495968]}, "id": 0}]}

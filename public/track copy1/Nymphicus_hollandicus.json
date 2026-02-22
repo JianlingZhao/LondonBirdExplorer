@@ -1,0 +1,1 @@
+{"type": "FeatureCollection", "features": [{"type": "Feature", "properties": {"species": "Nymphicus hollandicus", "year": 2024, "month": 7, "date": "2024-07-07", "location": "Upminster (LBC District)", "count": 1.0}, "geometry": {"type": "Point", "coordinates": [0.2504975, 51.555287]}, "id": 0}]}

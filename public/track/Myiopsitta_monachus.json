@@ -1,0 +1,1 @@
+{"type": "FeatureCollection", "features": [{"type": "Feature", "properties": {"species": 168, "year": 2023, "month": 1, "date": "2023-01-02", "location": "32 Thermopylae Gate, England, GB (51.49, -0.015)", "count": 1}, "geometry": {"type": "Point", "coordinates": [-0.0154012, 51.4902937]}, "id": 0}]}
