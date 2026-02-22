@@ -1,6 +1,6 @@
 # London Bird Observation Explorer
 
-this website provided a prototype of an exploring tool for birdwatcher using London bird observing data from e-Bird, which enable users to explore birdwatching hotspots and learn about different bird speies.
+this website provided a prototype of an exploring tool for birdwatcher using London bird observing data from e-Bird, which enable users to explore birdwatching hotspots and learn about different bird species.
 
 
 ## Live Website
