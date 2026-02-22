@@ -11,8 +11,8 @@ export default defineConfig({
     }),
     tailwindcss(),
   ],
-  
-  base: '/LondonBirdExplorer/',
+
+  base: '/',
   server: {
     hmr: {
       overlay: false
