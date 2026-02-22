@@ -82,7 +82,17 @@ function Sidebar({
 
       <div className="sidebar-mode">
 
-        <div className="sidebar-title">
+        <div className="font-size: 16px;
+
+           font-weight: 700;
+          
+           color: #6b7280;
+          
+           margin-bottom: 10px;
+          
+           text-transform: uppercase;
+          
+           letter-spacing: 0.08em;">
 
           Mode
 
