@@ -333,7 +333,7 @@ function GridPopup({
                       flex: 1
                   }}
                   >
-                  Where to find them
+                  Where to Find Them
                   </button>
 
                   </div>
