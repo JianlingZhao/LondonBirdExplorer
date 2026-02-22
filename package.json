@@ -1,11 +1,10 @@
 {
-  "homepage": "https://github.com/JianlingZhao/LondonBirdExplorer",
+  "homepage": "https://JianlingZhao.github.io/LondonBirdExplorer",
   "name": "my-react-app",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
     "dev": "vite",
     "build": "vite build",

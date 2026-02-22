@@ -3,7 +3,6 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
-  base: '/LondonBirdExplorer/',
   plugins: [
     react({
       babel: {
@@ -12,6 +11,8 @@ export default defineConfig({
     }),
     tailwindcss(),
   ],
+  
+  base: '/LondonBirdExplorer/',
   server: {
     hmr: {
       overlay: false
