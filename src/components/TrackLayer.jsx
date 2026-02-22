@@ -14,25 +14,38 @@ function TrackLayer({
 
   const [trackData, setTrackData] = useState(null);
   const [filteredData, setFilteredData] = useState(null);
+  const [loading, setLoading] = useState(false);
 
 
   // fetch species data
 
   useEffect(() => {
-  // clean data when selected species = null
+
     if (!species) {
-        setTrackData(null);
-        setFilteredData(null);
-        return;
+      setTrackData(null);
+      setFilteredData(null);
+      setLoading(false);
+      return;
     }
+
+    setLoading(true);
 
     const fileName = `/track/${species.replaceAll(" ", "_")}.json`;
 
- 
     fetch(fileName)
-      .then(res => res.json())
-      .then(data => setTrackData(data))
-      .catch(() => setTrackData(null));
+      .then((res) => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.json();
+      })
+      .then((data) => {
+        setTrackData(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Track fetch failed:", fileName, err);
+        setTrackData(null);
+        setLoading(false);
+      });
 
   }, [species]);
 
@@ -153,6 +166,39 @@ function TrackLayer({
 
 return (
   <>
+
+    {/* Loading indicator */}
+    {loading && (
+      <div
+        className="track-loading"
+        style={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+
+          background: "rgba(255,255,255,0.95)",
+          padding: "16px 22px",
+
+          borderRadius: "10px",
+
+          border: "1px solid #e5e7eb",
+
+          boxShadow: "0 6px 20px rgba(0,0,0,0.15)",
+
+          fontFamily: "system-ui",
+          fontSize: "14px",
+          color: "#374151",
+
+          zIndex: 2000,
+
+          pointerEvents: "none"
+        }}
+      >
+        Loading data...
+      </div>
+    )}
+    
     {/* data source */}
     <Source
       id="track-source"
