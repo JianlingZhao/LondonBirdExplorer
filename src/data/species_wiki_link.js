@@ -1555,7 +1555,7 @@ export const speciesMeta = {
     "wikiTitle": "Phylloscopus_collybita",
     "wikiPage": "https://en.wikipedia.org/wiki/Common_chiffchaff",
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Common_Chiffchaff_2025_04_04_01.jpg/330px-Common_Chiffchaff_2025_04_04_01.jpg",
-    "audio": "https://upload.wikimedia.org/wikipedia/commons/7/71/Chiffchaff.ogg",
+    "audio": "https://upload.wikimedia.org/wikipedia/commons/2/25/Chiffchaff_%28Phylloscopus_collybita%29_%28W1CDR0001497_BD9%29.ogg",
     "summary": "The common chiffchaff, or simply the chiffchaff, is a common and widespread leaf warbler which breeds in open woodlands throughout northern and temperate Europe and the Palearctic.",
     "commonName": "Common chiffchaff"
   },
