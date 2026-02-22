@@ -1,0 +1,1 @@
+{"type": "FeatureCollection", "features": [{"type": "Feature", "properties": {"species": "Spilopelia senegalensis", "year": 2024, "month": 5, "date": "2024-05-18", "location": "Nelson Road, Longford, England, GB (51.47, -0.459)", "count": 1.0}, "geometry": {"type": "Point", "coordinates": [-0.4592564, 51.4696471]}, "id": 0}]}
