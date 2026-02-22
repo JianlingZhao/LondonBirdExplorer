@@ -121,15 +121,23 @@ function SpeciesModal({ species, onClose }) {
             {/* some Some browsers like Safari are unable to handle wikimedia audio files (.ogg) */}
             {/* feching transcoded version(.ogg > .mp3) from wiki */}
             {/* try playing the source in sequence until a supported format is found */}
-            <source
-              src={oggToMp3(audio)}
-              type="audio/mpeg"
-            />
-
-            <source
-              src={audio}
-              type="audio/ogg"
-            />
+            {audio.endsWith(".ogg") ? (
+              <>
+                <source
+                  src={oggToMp3(audio)}
+                  type="audio/mpeg"
+                />
+                <source
+                  src={audio}
+                  type="audio/ogg"
+                />
+              </>
+            ) : (
+              <source
+                src={audio}
+                type="audio/mpeg"
+              />
+            )}
             Your browser does not support audio.
             </audio>
 
