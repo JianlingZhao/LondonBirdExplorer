@@ -11,7 +11,7 @@ GitHub Pages:
 
 ## Features
 
-The application provides two main exploration modes:
+The website provides two main exploration modes:
 
 ### Explore Mode
 
