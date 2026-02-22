@@ -13,7 +13,8 @@ function Sidebar({
   selectedYear,
   setSelectedYear,
   onLocateMe,
-  onPostcodeSearch
+  onPostcodeSearch,
+  setIsModalOpen
 }) {
 
 
@@ -341,6 +342,7 @@ function Sidebar({
                     ))}
                 </div>
               )}
+
           </div>
 
             {selectedSpecies && (
@@ -356,7 +358,32 @@ function Sidebar({
                   {speciesMeta[speciesAlias[selectedSpecies] || selectedSpecies]?.commonName || selectedSpecies}
 
                 </strong>
+                
+                {mode === "track" && selectedSpecies && (
+
+                <div
+                  onClick={() => setIsModalOpen(true)}
+                  style={{
+                    width: "100%",
+                    marginTop: "8px",
+                    padding: "6px 10px",
+                    fontSize: "13px",
+                    backgroundColor: "rgba(47,107,62,0.12)",
+                    color: "#2F6B3E",
+                    border: "1px solid rgba(1, 1, 1, 0.35)",
+                    borderRadius: "6px",
+                    cursor: "pointer",
+                    textAlign: "center",
+                    fontWeight: "500"
+                  }}
+                >
+                  View species details
+                </div>
+
+              )}
+
               </div>
+              
             )}
           </div>
 

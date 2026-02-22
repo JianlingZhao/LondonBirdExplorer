@@ -114,6 +114,7 @@ function App() {
           setSelectedYear={setSelectedYear}
           onLocateMe={handleLocateMe}
           onPostcodeSearch={handlePostcodeSearch}
+          setIsModalOpen={setIsModalOpen}
         />
 
         {/* map & props */}
