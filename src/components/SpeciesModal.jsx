@@ -122,37 +122,24 @@ function SpeciesModal({ species, onClose }) {
             {/* feching transcoded version(.ogg > .mp3) from wiki */}
             {/* try playing the source in sequence until a supported format is found */}
             {/* audio player */}
-            <audio
-              controls
-              preload="none"
-              style={{
-                width: "100%",
-                marginBottom: "4px",
-                borderRadius: "6px",
-                accentColor: "#5C8F6B"
-              }}
-            >
-            
-              {/* ORIGINAL FILE FIRST (correct MIME type) */}
-              <source
-                src={audio}
-                type={
-                  audio.endsWith(".ogg")
-                    ? "audio/ogg"
-                    : "audio/mpeg"
-                }
-              />
-            
-              {/* FALLBACK for Safari if original is .ogg */}
-              {audio.endsWith(".ogg") && (
+            {audio.endsWith(".ogg") ? (
+              <>
                 <source
                   src={oggToMp3(audio)}
                   type="audio/mpeg"
                 />
-              )}
-            
-              Your browser does not support audio.
-            
+                <source
+                  src={audio}
+                  type="audio/ogg"
+                />
+              </>
+            ) : (
+              <source
+                src={audio}
+                type="audio/mpeg"
+              />
+            )}
+            Your browser does not support audio.
             </audio>
 
 
