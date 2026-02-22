@@ -83,7 +83,12 @@ Carto Positron
 https://carto.com/
 
 
-### Note
+## Note
 
 Observing data from e-Bird were uploaded by birdwatchers, so this website is not a tool for exploring species pattern, but for users to find out places that are best for birdwatching, and get to know more about bird species that can be fount in London. 
+
+
+## AI Acknowledgement
+
+This project was developed with the assistance of ChatGPT (OpenAI, GPT-5.2, https://chat.openai.com/) in an assistive role. AI was used to help explain technical concepts, assist with debugging, and provide example code snippets. All research design, data processing, and implementation decisions were made independently by the author.
 
