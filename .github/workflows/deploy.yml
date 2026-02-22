@@ -36,8 +36,6 @@ jobs:
         run: npm run build
 
 
-      # ⭐ 关键步骤：复制数据到根路径（解决 /grid 404）
-
       - name: Copy static data to root
         run: |
           cp -r public/grid dist/grid || true
