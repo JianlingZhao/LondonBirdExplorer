@@ -7,7 +7,7 @@ this website provided a prototype of an exploring tool for birdwatcher using Lon
 
 GitHub Pages:
 
-https://yourusername.github.io/bird-explorer/
+[https://yourusername.github.io/bird-explorer/](https://jianlingzhao.github.io)
 
 
 ## Features
