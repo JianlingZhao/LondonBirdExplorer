@@ -1,18 +1,91 @@
 # London Bird Observation Explorer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+this website provided a prototype of an exploring tool for birdwatcher using London bird observing data from e-Bird, which enable users to explore birdwatching hotspots and learn about different bird speies.
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Live Website
 
-## React Compiler
+GitHub Pages:
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+https://yourusername.github.io/bird-explorer/
 
-Note: This will impact Vite dev & build performances.
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+The application provides two main exploration modes:
+
+### Explore Mode
+
+- Displays bird observations aggregated into spatial grid cells 
+- Users can click a grid to get a popup, which includes:
+  - Total observations in the grid
+  - Number of species being observed in the range of the grid
+  - Most commonly observed species in the grid
+- Users can open a species information modal by clicking the button in the popup
+- Users can switch directly to Track Mode for a selected species by clicking 'where to find' button
+
+### Track Mode
+
+- Displays individual observation points for a selected species
+- Users can filter by:
+  - Species (including both common name and scientific name)
+  - Year of observation
+  - Month of observation
+- Users can click individual observations to view details, like date, location and species count
+
+### Species Modal
+
+Each species modal includes:
+
+- Common name and scientific name for the bird species
+- Image (from Wikimedia Commons)
+- Audio recording of bird calls (if available on Wikimedia)
+- Summary description of the bird
+- A link to Wikipedia for exploring more information
+
+### Location Tools
+
+Users can:
+
+- Locate themselves using browser geolocation
+- Search a specific place using postcode
+
+
+## Data Sources
+
+### Bird Observation Data
+
+Source:
+
+eBird Basic Dataset (EBD)
+
+Processed into
+- Spatial grids (Explore Mode, including grid info and species info)
+- Individual observations (Track Mode)
+
+
+### Species Metadata
+
+Source:
+
+Wikimedia Commons  
+Wikipedia API
+
+Includes:
+- Name (common & scientific)
+- Images
+- Audio recordings
+- Species descriptions (summary)
+
+
+### Base Map
+
+Carto Positron
+
+https://carto.com/
+
+
+### Note
+
+Observing data from e-Bird were uploaded by birdwatchers, so this website is not a tool for exploring species pattern, but for users to find out places that are best for birdwatching, and get to know more about bird species that can be fount in London. 
+
