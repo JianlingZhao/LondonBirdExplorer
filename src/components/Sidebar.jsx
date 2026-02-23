@@ -142,7 +142,7 @@ function Sidebar({
 
         </button>
 
-        <div style={{ height: 10 }}/>
+        <div style={{ height: 2 }}/>
 
         <div className="or-divider">
           <span>OR</span>
