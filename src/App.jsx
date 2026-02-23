@@ -5,12 +5,13 @@ import TitleBar from "./components/TitleBar";
 import Sidebar from "./components/Sidebar";
 import MapDisplay from "./components/MapDisplay";
 import SpeciesModal from "./components/SpeciesModal";
-
+import ReadmeModal from "./components/ReadmeModal";
 
 function App() {
 
-  // USESTATE & CONST
-
+  // USESTATE & CONST  
+  // guide
+  const [isReadmeOpen, setIsReadmeOpen] = useState(false);
 
   // setting mode: explore/track
   const [mode, setMode] = useState("explore"); 
@@ -97,7 +98,7 @@ function App() {
   return (
     <div className="app-container">
       {/* HEADER */}
-      <TitleBar />
+      <TitleBar onOpenReadme={() => setIsReadmeOpen(true)} />
       {/* SIDEBAR + MAP */}
       <div className="main-layout">
 
@@ -142,6 +143,12 @@ function App() {
         <SpeciesModal
           species={selectedSpecies}
           onClose={() => setIsModalOpen(false)}
+        />
+      )}
+
+      {isReadmeOpen && (
+        <ReadmeModal
+          onClose={() => setIsReadmeOpen(false)}
         />
       )}
 

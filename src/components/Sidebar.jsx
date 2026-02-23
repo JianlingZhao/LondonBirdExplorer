@@ -83,7 +83,7 @@ function Sidebar({
 
       <div className="sidebar-mode">
 
-        <div className="sidebar-title">
+        <div className="sidebar-titlemode">
 
           Mode
 
